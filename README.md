@@ -135,7 +135,14 @@ python -m torch.distributed.launch --nproc_per_node=8 run_beit3_finetuning.py \
 
 If you find this repository useful, please consider citing works:
 ```
-
+@misc{long2023hard,
+      title={When hard negative sampling meets supervised contrastive learning}, 
+      author={Zijun Long and George Killick and Richard McCreadie and Gerardo Aragon Camarasa and Zaiqiao Meng},
+      year={2023},
+      eprint={2308.14893},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}
 ```
 
 
