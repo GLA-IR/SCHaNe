@@ -1,10 +1,6 @@
 # When hard negative sampling meets supervised contrastive learning
 
-Official PyTorch implementation of Paper: When hard negative sampling meets supervised contrastive learning. 
-## Pretrained models
-
-
-
+Official PyTorch implementation of Paper: When hard negative sampling meets supervised contrastive learning.
 
 ## Setup
 
@@ -19,10 +15,6 @@ pip install -r requirements.txt
 1. Models pretrained on ImageNet-21k images, 160 GB text documents, and web-scale image-text pairs (collected from [LAION-400M](https://laion.ai/blog/laion-400-open-dataset/), [English LAION-2B](https://laion.ai/blog/laion-5b/), [COYO-700M](https://github.com/kakaobrain/coyo-dataset), and CC15M). 
    - [`BEiT3-base`](https://conversationhub.blob.core.windows.net/beit-share-public/beit3/pretraining/beit3_base_patch16_224.pth): #layer=12; hidden=768; FFN factor=4x; #head=12; patch=16x16; #parameters: 276M
    - [`BEiT3-large`](https://conversationhub.blob.core.windows.net/beit-share-public/beit3/pretraining/beit3_large_patch16_224.pth): #layer=24; hidden=1024; FFN factor=4x; #head=16; patch=16x16; #parameters: 746M
-
-2. Perform image-text contrastive intermediate tuning on `BEiT3-base` and `BEiT3-large`. 
-   - [`BEiT3-base-itc`](https://conversationhub.blob.core.windows.net/beit-share-public/beit3/pretraining/beit3_base_itc_patch16_224.pth): #layer=12; hidden=768; FFN factor=4x; #head=12; patch=16x16; #parameters: 222M
-   - [`BEiT3-large-itc`](https://conversationhub.blob.core.windows.net/beit-share-public/beit3/pretraining/beit3_large_itc_patch16_224.pth): #layer=24; hidden=1024; FFN factor=4x; #head=16; patch=16x16; #parameters: 674M
 
 ### prepare data
 
@@ -45,7 +37,7 @@ The directory structure is the standard layout of torchvision's [`datasets.Image
       img4.jpeg
 ```
 
-We then generate the index json files using the following command. [beit3.spm](https://conversationhub.blob.core.windows.net/beit-share-public/beit3/sentencepiece/beit3.spm) is the sentencepiece model used for tokenizing texts.
+We then generate the index json files using the following command. 
 ```
 from datasets import ImageNetDataset
 
@@ -92,7 +84,7 @@ python -m torch.distributed.launch --nproc_per_node=8 run_beit3_finetuning.py \
 - `--batch_size`: batch size per GPU. Effective batch size = `number of GPUs` * `--batch_size` * `--update_freq`. So in the above example, the effective batch size is `8*128*1 = 1024`.
 - `--finetune`: weight path of your pretrained models.
 - `--alpha`: weight of the contrastive loss.
-- - `--task`: dataset to be used for fine-tuning, e.g. `CIFAR-FS` and `miniImageNet`.
+- `--task`: dataset to be used for fine-tuning, e.g. `CIFAR-FS` and `miniImageNet`.
 - `--temp`: temperature of the contrastive loss
 - `--estimator`: estimator of the contrastive loss, `hard` means hard negative sampling.
 - `--loss`: loss function, `SCHaNe` or `CE` or `SupCon` or `SimCLR`.
@@ -136,14 +128,6 @@ python -m torch.distributed.launch --nproc_per_node=8 run_beit3_finetuning.py \
 
 If you find this repository useful, please consider citing works:
 ```
-@misc{long2023hard,
-      title={When hard negative sampling meets supervised contrastive learning}, 
-      author={Zijun Long and George Killick and Richard McCreadie and Gerardo Aragon Camarasa and Zaiqiao Meng},
-      year={2023},
-      eprint={2308.14893},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
-}
 ```
 
 
