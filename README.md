@@ -90,11 +90,12 @@ python -m torch.distributed.launch --nproc_per_node=8 run_beit3_finetuning.py \
 
 ```
 - `--batch_size`: batch size per GPU. Effective batch size = `number of GPUs` * `--batch_size` * `--update_freq`. So in the above example, the effective batch size is `8*128*1 = 1024`.
-- `--finetune`: weight path of your pretrained models; please download the pretrained model weights in [README.md](../README.md#pretrained-models)
-- `--alpha`: weight of the contrastive loss
+- `--finetune`: weight path of your pretrained models.
+- `--alpha`: weight of the contrastive loss.
+- - `--task`: dataset to be used for fine-tuning, e.g. `CIFAR-FS` and `miniImageNet`.
 - `--temp`: temperature of the contrastive loss
 - `--estimator`: estimator of the contrastive loss, `hard` means hard negative sampling.
-- `--loss`: loss function, `SCHaNe` or `CE` or `SupCon` or `SimCLR`
+- `--loss`: loss function, `SCHaNe` or `CE` or `SupCon` or `SimCLR`.
 
 ## Full dataset Fine-tuning on ImageNet-1k (Image Classification)
 

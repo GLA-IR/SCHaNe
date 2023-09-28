@@ -118,13 +118,7 @@ class TwoCropTransformcaltech256:
             x = x.repeat(3, axis=2)
             # convert numpy array to PIL Image
             x = torchvision.transforms.functional.to_pil_image(x)
-            # img2 = np.zeros_like(x)
-            # img2[:, :] = x[:,:,0]
-            # img2[:, :] =  x[:,:,0]
-            # img2[:, :] =  x[:,:,0]
-            # x = img2
-            # gray = cv2.cvtColor(img, cv.CV_BGR2GRAY)
-        #     # gray = cv2.cvtColor(x, cv2.COLOR_BGR2GRAY)
+
         x = x.convert('RGB')
         return [self.transform(x), self.transform(x)]
 
@@ -156,16 +150,7 @@ def load_file(root, dataset):
         map_2018 = dict()
         for _map in map_label:
             map_2018[int(_map['id'])] = _map['name'].strip().lower()
-    # with open(os.path.join(root, f'val201{year_flag}_locations.json'), 'r') as f:
-    #     val_location = json.load(f)
-    # val_id2meta = dict()
-    # for meta_info in val_location:
-    #     val_id2meta[meta_info['id']] = meta_info
-    # with open(os.path.join(root, f'train201{year_flag}_locations.json'), 'r') as f:
-    #     train_location = json.load(f)
-    # train_id2meta = dict()
-    # for meta_info in train_location:
-    #     train_id2meta[meta_info['id']] = meta_info
+
     with open(os.path.join(root, f'val201{year_flag}.json'), 'r') as f:
         val_class_info = json.load(f)
     with open(os.path.join(root, f'train201{year_flag}.json'), 'r') as f:
@@ -203,9 +188,7 @@ def find_images_and_targets_2017_2018(root,dataset,istrain=False,aux_info=False)
 
         if aux_info:
             raise NotImplementedError
-            # temporal_info = get_temporal_info(date,miss_hour=miss_hour)
-            # spatial_info = get_spatial_info(latitude,longitude)
-            # images_and_targets.append((file_path,target,temporal_info+spatial_info))
+
         else:
             images_and_targets.append((file_path,target))
     return images_and_targets,class_to_idx,
@@ -258,11 +241,7 @@ class DatasetMeta(torch.utils.data.Dataset):
             img = self.transform(img)
         if self.aux_info:
             raise NotImplementedError
-            # if type(aux_info) is np.ndarray:
-            #     select_index = np.random.randint(aux_info.shape[0])
-            #     return img, target, aux_info[select_index, :]
-            # else:
-            #     return img, target, np.asarray(aux_info).astype(np.float64)
+
         else:
             return img, target
 
@@ -413,14 +392,7 @@ def create_image_downstream_datasets(opt):
                                         split='test',
                                         download=True)
     elif opt.task == 'places365':
-        # train_dataset = datasets.Places365(root=opt.data_path,
-        #                                    transform=TwoCropTransform(train_transform),
-        #                                    split='train-standard',
-        #                                    download=True)
-        # val_dataset = datasets.Places365(root=opt.data_path,
-        #                                  transform=val_transform,
-        #                                  split='val',
-        #                                  download=True)
+
         train_dataset = datasets.ImageFolder(root=opt.data_path +'/places365/' +'train',
                              transform=TwoCropTransform(train_transform),
                              )
@@ -438,14 +410,7 @@ def create_image_downstream_datasets(opt):
                                            version='2021_val',
                                            download=True)
     elif opt.task == 'inat2017':
-        # dataset = datasets.INaturalist(root=opt.data_path,
-        #                                transform=TwoCropTransformcaltech256(train_transform),
-        #                                version='2017',)
-        # train_dataset, _ = split_dataset(dataset, opt)
-        # dataset = datasets.INaturalist(root=opt.data_path,
-        #                                transform=CovertToRGB(val_transform),
-        #                                version='2017',)
-        # _, val_dataset = split_dataset(dataset, opt)
+
         train_dataset = DatasetMeta(root=opt.data_path+'/2017/',transform=TwoCropTransform(train_transform),train=True,
                                     dataset='inaturelist2017')
         val_dataset = DatasetMeta(root=opt.data_path+'/2017/',transform=val_transform,train=False,
