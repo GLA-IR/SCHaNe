@@ -12,7 +12,7 @@ from timm.models.layers import trunc_normal_ as __call_trunc_normal_
 
 from torchscale.model.BEiT3 import BEiT3
 # from torchscale.architecture.config import EncoderConfig
-from armbench.config import EncoderConfig
+from CL_framework.config import EncoderConfig
 
 def trunc_normal_(tensor, mean=0., std=1.):
     __call_trunc_normal_(tensor, mean=mean, std=std, a=-std, b=std)
